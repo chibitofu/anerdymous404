@@ -1,0 +1,20 @@
+html, body{
+    height:100%;
+    margin:0;
+    padding:0;
+}
+
+#twitterContainer {
+  margin: 0;
+  padding: 0;
+  height: 400px;
+  width: 100%;
+  display: block;
+}
+
+#tweets {
+  overflow: scroll; overflow-x:hidden;
+  height:100%;
+  color: blue;
+  border:solid;
+}

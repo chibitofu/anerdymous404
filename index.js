@@ -2,9 +2,14 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var ejsLayouts = require('express-ejs-layouts');
+var dotenv = require('dotenv');
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var Twitter = require('twitter');
+var filter = require('profanity-filter');
+filter.seed('profanity');
+filter.setReplacementMethod('word');
+dotenv.load();
 
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/views') );
@@ -17,32 +22,41 @@ io.on('connection', function(socket){
 });
 
 var client = new Twitter({
-  consumer_key:'J1nGeALxaEoJa2Y3AMRMIgURl',
-  consumer_secret:'cVp09BMJ3BWndRUfrlHL3i1gk1ZDCRrbXSjIE0NyvbdzzuUDYw',
-  access_token_key:'4658204454-tBQRWPKOxzKr67B8PNRxtymPGNDwSWKx5jb1n9q',
-  access_token_secret:'CghPNWNb8RlLin6BxXwGdYHZfk4GkisEqzwjlZu9h0oL6'
+  consumer_key: process.env.TWITTER_CONSUMER_KEY,
+  consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+  access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
+  access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
 });
 
 var params = {screen_name: 'anerdymous404'};
 
 app.get('/', function(req, res){
-  client.stream('statuses/filter', {track: 'anerdymouse404'}, function(stream) {
-    stream.on('data', function(tweet){
-      var tweets = tweet;
-      io.emit('tweets', tweets);
-    });
-    stream.on('error', function(error){
-      throw error;
-    });
+  client.get('search/tweets', {q: 'anerdymous404'}, function(error, tweets, response){
+    if(!error){
+      var tweet = tweets.statuses;
+      console.log(tweet);
+      res.render('index', {tweet: tweet});
+    }
   });
-
-  res.render('index');
 });
 
 app.post('/newTweet', function(req, res){
-  var newTweet = req.body.tweet;
+  filter.seed('profanity');
+  filter.setReplacementMethod('word');
+  var lowerCaseTweet = req.body.tweet.toLowerCase();
+  var newTweet = filter.clean(lowerCaseTweet);
   client.post('statuses/update', {status: newTweet}, function(error, tweet, response){
     console.log(tweet);
+    res.redirect('/');
+  });
+});
+
+client.stream('statuses/filter', {track: 'nerd'}, function(stream) {
+  stream.on('data', function(tweet){
+    var tweets = tweet;
+    io.emit('tweets', tweets);
+  });
+  stream.on('error', function(error){
   });
 });
 

@@ -1,4 +1,27 @@
-<h1>Test Page </h1>
-
-<div id='tweets'>
+<div class="row">
+  <div class="col-xs-12">
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-4">
+    <div id="twitterContainer">
+      <p>Twitter Feed</p>
+    <div id="tweets">
+    </div>
+  </div>
+  </div>
+  <div class="col-xs-4">
+    <form method="POST" action="newTweet" class="form">
+      <input type="text" class="form-control" name="tweet" size="140" maxlength="140">
+      <input type="submit" class="btn btn-default">
+    </form>
+  </div>
+  <div class="col-xs-4">
+    <a class="twitter-timeline" href="https://twitter.com/search?q=anerdymous404" data-widget-id="681978086871535616" data-chrome="nofooter" data-aria-polite="assertive">Tweets by anerdymous404</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+  </div>
 </div>
