@@ -8,7 +8,7 @@ var io = require('socket.io')(server);
 var Twitter = require('twitter');
 var filter = require('profanity-filter');
 filter.seed('profanity');
-filter.setReplacementMethod('word');
+filter.setReplacementMethod('grawlix');
 dotenv.load();
 
 app.set('view engine', 'ejs');
@@ -34,17 +34,26 @@ app.get('/', function(req, res){
   client.get('search/tweets', {q: 'anerdymous404'}, function(error, tweets, response){
     if(!error){
       var tweet = tweets.statuses;
-      console.log(tweet);
       res.render('index', {tweet: tweet});
     }
   });
 });
 
 app.post('/newTweet', function(req, res){
-  filter.seed('profanity');
-  filter.setReplacementMethod('word');
-  var lowerCaseTweet = req.body.tweet.toLowerCase();
-  var newTweet = filter.clean(lowerCaseTweet);
+  // var lowerCaseTweet = req.body.tweet.toLowerCase();
+  var newTweet = "";
+  var lat = req.body.lat;
+  var lng = req.body.lng;
+  var tweetBroken = req.body.tweet.split(" ");
+  for (var key in tweetBroken) {
+    var cleanTweet = filter.clean(tweetBroken[key]);
+    if (key !== 0) {
+      newTweet += " " + cleanTweet;
+    } else {
+      newTweet += cleanTweet;
+    }
+  }
+
   client.post('statuses/update', {status: newTweet}, function(error, tweet, response){
     console.log(tweet);
     res.redirect('/');

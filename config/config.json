@@ -1,11 +1,11 @@
 {
   "development": {
-    "database": "database_development",
+    "database": "anerdymous404",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
-    "database": "database_test",
+    "database": "anerdymous404",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
