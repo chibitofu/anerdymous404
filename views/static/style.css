@@ -2,6 +2,7 @@ html, body{
     height:100%;
     margin:0;
     padding:0;
+    background-color: rgb(38, 55, 79);
 }
 
 body { margin:0; padding:0; }
@@ -12,19 +13,4 @@ body { margin:0; padding:0; }
   height: 400px;
   width:100%;
   border: solid;
-}
-
-#twitterContainer {
-  margin: 0;
-  padding: 0;
-  height: 400px;
-  width: 100%;
-  display: block;
-}
-
-#tweets {
-  overflow: scroll; overflow-x:hidden;
-  height:100%;
-  color: blue;
-  border:solid;
 }

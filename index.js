@@ -4,8 +4,10 @@ var bodyParser = require('body-parser');
 var ejsLayouts = require('express-ejs-layouts');
 var dotenv = require('dotenv');
 var Twitter = require('twitter');
-var filter = require('profanity-filter');
 var db = require('./models');
+
+//Manually edited the filter.js file to exclude # and @ for  grawlix filtering. So it doesn't accidentally interact with twitter commands//
+var filter = require('profanity-filter');
 filter.seed('profanity');
 filter.setReplacementMethod('grawlix');
 dotenv.load();
@@ -31,6 +33,7 @@ app.get('/', function(req, res){
   res.render('index');
 });
 
+//Grabs all tweets from the databse then send them to script.js to be used in creating the map//
 app.post('/', function(req, res){
   db.tweet.findAll().then(function(tweet){
     if (tweet) {
@@ -43,10 +46,11 @@ app.post('/', function(req, res){
 });
 
 app.post('/newTweet', function(req, res){
-  // var lowerCaseTweet = req.body.tweet.toLowerCase();
   var newTweet = "";
+  //Reduced amount of decimal places to make coord and more anonymous//
   var lat = req.body.lat.toFixed(4);
   var lng = req.body.lng.toFixed(4);
+  //Spilt string into an array, then run each array piece through the filter. This was to fix an issue with profanity filter where it would only filter the first iteration of a blacklisted word//
   var tweetBroken = req.body.tweet.split(" ");
   for (var key in tweetBroken) {
     var cleanTweet = filter.clean(tweetBroken[key]);

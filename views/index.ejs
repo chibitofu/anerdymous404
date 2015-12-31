@@ -20,21 +20,14 @@
     </nav>
   </div>
 </div>
-<div class="row">
-  <div class="col-xs-4">
-    <div id="twitterContainer">
-      <p>Twitter Feed</p>
-    <div id="tweets">
-    </div>
-  </div>
-  </div>
-  <div class="col-xs-4">
+  <div class="col-xs-8">
     <form method="POST" action="newTweet" class="form">
       <input type="text" class="form-control" name="tweet" size="140" maxlength="140">
       <input type="hidden" class="lat" name="lat" value="47.6149715">
       <input type="hidden" class="lng" name="lng" value="-122.6154024">
       <input type="submit" class="btn btn-default">
     </form>
+    <div id='map' class='map pad2'>Map</div>
   </div>
   <div class="col-xs-4">
     <a class="twitter-timeline" href="https://twitter.com/search?q=anerdymous404" data-widget-id="681978086871535616" data-chrome="nofooter" data-aria-polite="assertive">Tweets by anerdymous404</a>
@@ -43,6 +36,5 @@
 </div>
 <div class="row">
   <div class="col-xs-12">
-    <div id='map' class='map pad2'>Map</div>
   </div>
 </div>
