@@ -17,11 +17,6 @@ app.use(express.static(__dirname + '/views') );
 app.use(ejsLayouts);
 app.use(bodyParser.urlencoded({extended:false} ) );
 
-// io.on('connection', function(socket){
-//   socket.on('event', function(data){});
-//   socket.on('disconnect', function(){});
-// });
-
 var client = new Twitter({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,
   consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
@@ -47,10 +42,11 @@ app.post('/', function(req, res){
 
 app.post('/newTweet', function(req, res){
   var newTweet = "";
-  //Reduced amount of decimal places to make coord and more anonymous//
-  var lat = req.body.lat.toFixed(4);
-  var lng = req.body.lng.toFixed(4);
-  //Spilt string into an array, then run each array piece through the filter. This was to fix an issue with profanity filter where it would only filter the first iteration of a blacklisted word//
+//Reduced amount of decimal places to make coord more anonymous//
+  var lat = parseFloat(req.body.lat).toFixed(1);
+  var lng = parseFloat(req.body.lng).toFixed(1);
+
+//Spilt string into an array, then run each array piece through the filter. This was to fix an issue with the profanity filter where it would only filter the first iteration of a blacklisted word//
   var tweetBroken = req.body.tweet.split(" ");
   for (var key in tweetBroken) {
     var cleanTweet = filter.clean(tweetBroken[key]);
@@ -73,14 +69,5 @@ app.post('/newTweet', function(req, res){
     });
   });
 });
-
-// client.stream('statuses/filter', {track: 'nerd'}, function(stream) {
-//   stream.on('data', function(tweet){
-//     var tweets = tweet;
-//     io.emit('tweets', tweets);
-//   });
-//   stream.on('error', function(error){
-//   });
-// });
 
 app.listen(process.env.PORT||3000);
