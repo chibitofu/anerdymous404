@@ -31,8 +31,8 @@
   <div class="col-xs-4">
     <form method="POST" action="newTweet" class="form">
       <input type="text" class="form-control" name="tweet" size="140" maxlength="140">
-      <input type="hidden" class="lat" name="lat">
-      <input type="hidden" class="lng" name="lng">
+      <input type="hidden" class="lat" name="lat" value="47.6149715">
+      <input type="hidden" class="lng" name="lng" value="-122.6154024">
       <input type="submit" class="btn btn-default">
     </form>
   </div>
@@ -43,5 +43,6 @@
 </div>
 <div class="row">
   <div class="col-xs-12">
+    <div id='map' class='map pad2'>Map</div>
   </div>
 </div>

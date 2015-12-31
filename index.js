@@ -3,10 +3,9 @@ var app = express();
 var bodyParser = require('body-parser');
 var ejsLayouts = require('express-ejs-layouts');
 var dotenv = require('dotenv');
-var server = require('http').createServer(app);
-var io = require('socket.io')(server);
 var Twitter = require('twitter');
 var filter = require('profanity-filter');
+var db = require('./models');
 filter.seed('profanity');
 filter.setReplacementMethod('grawlix');
 dotenv.load();
@@ -16,10 +15,10 @@ app.use(express.static(__dirname + '/views') );
 app.use(ejsLayouts);
 app.use(bodyParser.urlencoded({extended:false} ) );
 
-io.on('connection', function(socket){
-  socket.on('event', function(data){});
-  socket.on('disconnect', function(){});
-});
+// io.on('connection', function(socket){
+//   socket.on('event', function(data){});
+//   socket.on('disconnect', function(){});
+// });
 
 var client = new Twitter({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,
@@ -28,22 +27,26 @@ var client = new Twitter({
   access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
 });
 
-var params = {screen_name: 'anerdymous404'};
-
 app.get('/', function(req, res){
-  client.get('search/tweets', {q: 'anerdymous404'}, function(error, tweets, response){
-    if(!error){
-      var tweet = tweets.statuses;
-      res.render('index', {tweet: tweet});
+  res.render('index');
+});
+
+app.post('/', function(req, res){
+  db.tweet.findAll().then(function(tweet){
+    if (tweet) {
+      res.status(200, 'success').send(tweet);
+    } else {
+      res.status(500, 'error');
     }
+    res.render('index', {tweet: tweet});
   });
 });
 
 app.post('/newTweet', function(req, res){
   // var lowerCaseTweet = req.body.tweet.toLowerCase();
   var newTweet = "";
-  var lat = req.body.lat;
-  var lng = req.body.lng;
+  var lat = req.body.lat.toFixed(4);
+  var lng = req.body.lng.toFixed(4);
   var tweetBroken = req.body.tweet.split(" ");
   for (var key in tweetBroken) {
     var cleanTweet = filter.clean(tweetBroken[key]);
@@ -55,18 +58,29 @@ app.post('/newTweet', function(req, res){
   }
 
   client.post('statuses/update', {status: newTweet}, function(error, tweet, response){
-    console.log(tweet);
-    res.redirect('/');
+    newTweetItem = {
+      tweet: req.body.tweet,
+      lat: lat,
+      lng: lng
+    };
+
+    db.tweet.create(newTweetItem).then(function(){
+      res.redirect('/');
+    });
   });
 });
 
-client.stream('statuses/filter', {track: 'nerd'}, function(stream) {
-  stream.on('data', function(tweet){
-    var tweets = tweet;
-    io.emit('tweets', tweets);
-  });
-  stream.on('error', function(error){
-  });
-});
+// client.stream('statuses/filter', {track: 'nerd'}, function(stream) {
+//   stream.on('data', function(tweet){
+//     var tweets = tweet;
+//     io.emit('tweets', tweets);
+//   });
+//   stream.on('error', function(error){
+//   });
+// });
 
-server.listen(process.env.PORT||3000);
+// app.get('/testmap', function(req, res){
+//   res.render('testmap');
+// });
+
+app.listen(process.env.PORT||3000);

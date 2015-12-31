@@ -4,6 +4,16 @@ html, body{
     padding:0;
 }
 
+body { margin:0; padding:0; }
+
+#map {
+  top:0;
+  bottom:0;
+  height: 400px;
+  width:100%;
+  border: solid;
+}
+
 #twitterContainer {
   margin: 0;
   padding: 0;
