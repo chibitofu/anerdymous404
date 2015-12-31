@@ -79,8 +79,4 @@ app.post('/newTweet', function(req, res){
 //   });
 // });
 
-// app.get('/testmap', function(req, res){
-//   res.render('testmap');
-// });
-
 app.listen(process.env.PORT||3000);
