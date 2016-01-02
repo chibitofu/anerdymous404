@@ -7,10 +7,25 @@ html, body{
 
 body { margin:0; padding:0; }
 
+footer {
+  color: rgb(255, 255, 255);
+  font-size: 10px;
+}
+
 #map {
   top:0;
   bottom:0;
   height: 400px;
   width:100%;
   border: solid;
+}
+
+.wordcount {
+  color: rgb(145, 145, 145);
+  font-size: 10px;
+  margin: 2px 75px 10px 0;
+}
+
+.wordcount div {
+  display: inline;
 }

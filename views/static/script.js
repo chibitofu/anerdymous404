@@ -53,6 +53,13 @@ $(document).ready(function(){
 
   });
 
+$('#tweet-field').keyup(function(){
+  var words = $('#tweet-field').val();
+  var wordcount = 0;
+  for (wordcount; wordcount <= words.length; wordcount++){
+    $('.words').html(wordcount);
+  }
+});
 
 
 });
