@@ -1,5 +1,6 @@
 # anerdymous404
 Anonymous Twitter portal to tweet out all your nerdy feelings without being judged.
+[anerdymous404 deployed on heroku](https://anerdymous404.herokuapp.com/)
 
 # Primary Technology
 * Node.js app using Sequelize, ejs, and jQuery.
