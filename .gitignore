@@ -1,3 +1,4 @@
 node_modules/*
 .env
+//Added exception to profanity-filter to keep filtered words and grawlix edits//
 !node_modules/profanity-filter
