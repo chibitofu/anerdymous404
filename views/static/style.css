@@ -10,20 +10,26 @@ body { margin:0; padding:0; }
 footer {
   color: rgb(255, 255, 255);
   font-size: 10px;
+  margin-bottom: 10px;
 }
 
 #map {
   top:0;
   bottom:0;
-  height: 400px;
+  height: 415px;
   width:100%;
   border: solid;
+}
+
+.logo {
+  height: 150px;
+  margin: 15px auto 10px;
 }
 
 .wordcount {
   color: rgb(145, 145, 145);
   font-size: 10px;
-  margin: 2px 75px 10px 0;
+  margin: 2px 75px 8px 0;
 }
 
 .wordcount div {
