@@ -1,5 +1,6 @@
 # anerdymous404
-Anonymous Twitter portal to tweet out all your nerdy feelings without being judged.
+[Imgur](http://i.imgur.com/hbApy7c.png)
+Anonymous Twitter portal to tweet out all your nerdy feelings without being judged.  
 [anerdymous404 deployed on heroku](https://anerdymous404.herokuapp.com/)
 
 # Primary Technology
